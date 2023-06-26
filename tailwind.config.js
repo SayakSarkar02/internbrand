@@ -20,7 +20,10 @@ module.exports = {
         'purple-light': '#EBE9FE',
         'purple-mid': '#9B8AFB',
         'purple-dark': '#6938EF',
-      }
+      },
+      boxShadow: {
+        custom: '0px -3px 10px 0px rgba(0, 0, 0, 0.25)',
+      },
     },
   },
   plugins: [],

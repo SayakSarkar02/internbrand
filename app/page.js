@@ -2,13 +2,19 @@
 import Navbar from "@components/Navbar"
 import Subbar from "@components/Subbar"
 import Card from "@components/Card"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Details from "@components/Details"
 
 export default function Home() {
 
   const [type, setType] = useState("popular");
+  const [apply, setApply] = useState(true);
   const [selected, setSelected] = useState(-1);
+
+  const reApply = () => {
+    setApply(prev=>!prev);
+  }
+
   const [filters, setFilters] = useState(
     {
       category: [],
@@ -27,14 +33,6 @@ export default function Home() {
       applicants: [0, 250]
     }
   );
-
-  const handleSetType = (type) => {
-    setType(type);
-  }
-
-  const applyFilters = (filters) => {
-    setFilters(filters);
-  }
 
   const dataList = [
     {
@@ -68,7 +66,7 @@ export default function Home() {
       id: 2,
       title: "Motion Graphics Designer",
       company: "Xapo Visuals",
-      category: "IT Services",
+      category: "Graphics",
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687728682/image_4_iios8f.png",
       duration: 1, //in months
       experience: "Intermediate",
@@ -94,7 +92,7 @@ export default function Home() {
       id: 3,
       title: "Motion Graphics Designer",
       company: "Xapo Visuals",
-      category: "IT Services",
+      category: "Design",
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687728682/image_4_iios8f.png",
       duration: 1, //in months
       experience: "Intermediate",
@@ -120,7 +118,7 @@ export default function Home() {
       id: 4,
       title: "Motion Graphics Designer",
       company: "Xapo Visuals",
-      category: "IT Services",
+      category: "Design",
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687728682/image_4_iios8f.png",
       duration: 1, //in months
       experience: "Intermediate",
@@ -144,9 +142,9 @@ export default function Home() {
     },
     {
       id: 5,
-      title: "Motion Graphics Designer",
+      title: "Super Designer",
       company: "Xapo Visuals",
-      category: "IT Services",
+      category: "Graphics",
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687728682/image_4_iios8f.png",
       duration: 1, //in months
       experience: "Intermediate",
@@ -170,15 +168,103 @@ export default function Home() {
     }
   ]
 
+  function filterDataList(data, fil) {
+    return dataList.filter((data) => {
+      // Check category filter
+      if (filters.category.length > 0 && !filters.category.includes(data.category)) {
+        return false;
+      }
+  
+      // Check skills filter
+      // if (filters.skills.length > 0) {
+      //   const hasAllSkills = filters.skills.every((skill) =>
+      //     data.techStacks.includes(skill)
+      //   );
+      //   if (!hasAllSkills) {
+      //     return false;
+      //   }
+      // }
+  
+      // Check timings filter
+      // if (filters.timings.parttime && !data.duration <= 4) {
+      //   return false;
+      // }
+      // if (filters.timings.fulltime && !(data.duration > 4)) {
+      //   return false;
+      // }
+  
+      // Check type filter
+      // if (filters.type.workfromhome && !data.location.includes("Remote")) {
+      //   return false;
+      // }
+      // if (filters.type.inoffice && data.location.includes("Remote")) {
+      //   return false;
+      // }
+  
+      // Check duration filter
+      // if (
+      //   data.duration < filters.duration[0] ||
+      //   data.duration > filters.duration[1]
+      // ) {
+      //   return false;
+      // }
+  
+      // Check location filter
+      // if (
+      //   filters.location.length > 0 &&
+      //   !filters.location.includes(data.location)
+      // ) {
+      //   return false;
+      // }
+  
+      // Check stipend filter
+      // if (
+      //   data.stipend[0] < filters.stipend[0] ||
+      //   data.stipend[1] > filters.stipend[1]
+      // ) {
+      //   return false;
+      // }
+  
+      // Check applicants filter
+      // if (
+      //   data.applicants < filters.applicants[0] ||
+      //   data.applicants > filters.applicants[1]
+      // ) {
+      //   return false;
+      // }
+  
+      // If all filters pass, include the data in the filtered array
+      return true;
+    });
+  }
+
+  useEffect(() => {
+    console.log("Changes Applied");
+  }, [apply]);
+  
+
+  const handleSetType = (type) => {
+    setType(type);
+  }
+
+  const applyFilters = (filters) => {
+    setFilters(filters);
+  }
+
+  
+
   return (
     <main className="">
       <Navbar/>
-      {/* <h3>{filters?.duration[0] + " : "  + filters?.duration[1]}</h3> */}
-      <Subbar handleSetType={handleSetType} type={type} filters={filters} applyFilters={applyFilters}/>
+      <button onClick={()=>{
+        reApply();
+        console.log(filterDataList(dataList, filters));
+        }}>Print</button>
+      <Subbar handleSetType={handleSetType} reRender={reApply} type={type} filters={filters} applyFilters={applyFilters}/>
       <div className="my-8 flex flex-row ">
         <div className="w-1/3 flex flex-col gap-4">
           {
-            dataList?.map((data, index)=>(
+            filterDataList(dataList, filters).map((data, index)=>(
               <div key={data?.id} onClick={()=>{setSelected(dataList[index])}} >
                 <Card title={data?.title} isSelected={index===selected.id-1} company={data?.company} logo={data?.logo} techStacks={data?.techStacks} duration={data?.duration} stipend={data?.stipend} applicants={data?.applicants} endDate={data?.endDate}/>
               </div>

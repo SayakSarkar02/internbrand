@@ -5,7 +5,7 @@ import filter from "@assets/icons/filter.svg"
 import { FilterMenu } from "@components/FilterMenu"
 import { useState } from "react"
 
-const Subbar = ({type, handleSetType, filters, applyFilters}) => {
+const Subbar = ({type, handleSetType, filters, applyFilters, reRender}) => {
 
     const selected = " bg-purple-dark text-white font-bold"
 
@@ -35,7 +35,7 @@ const Subbar = ({type, handleSetType, filters, applyFilters}) => {
             <button onClick={handleToggleFilter}>
                 <Image src={filter} alt="filter" />
             </button>
-                {isFilterOpen && <FilterMenu filters={filters} applyFilters={applyFilters} handleToggleFilter={handleToggleFilter}/>}
+                {isFilterOpen && <FilterMenu reRender={reRender} filters={filters} applyFilters={applyFilters} handleToggleFilter={handleToggleFilter}/>}
             </div>
         </div>
     </div>
