@@ -256,10 +256,10 @@ export default function Home() {
   return (
     <main className="">
       <Navbar/>
-      <button onClick={()=>{
+      {/* <button onClick={()=>{
         reApply();
         console.log(filterDataList(dataList, filters));
-        }}>Print</button>
+        }}>Print</button> */}
       <Subbar handleSetType={handleSetType} reRender={reApply} type={type} filters={filters} applyFilters={applyFilters}/>
       <div className="my-8 flex flex-row ">
         <div className="w-1/3 flex flex-col gap-4">
