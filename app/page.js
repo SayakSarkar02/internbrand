@@ -173,7 +173,7 @@ export default function Home() {
   return (
     <main className="">
       <Navbar/>
-      <h3>{filters?.duration[0] + " : "  + filters?.duration[1]}</h3>
+      {/* <h3>{filters?.duration[0] + " : "  + filters?.duration[1]}</h3> */}
       <Subbar handleSetType={handleSetType} type={type} filters={filters} applyFilters={applyFilters}/>
       <div className="my-8 flex flex-row ">
         <div className="w-1/3 flex flex-col gap-4">
