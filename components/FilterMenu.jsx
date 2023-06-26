@@ -170,6 +170,35 @@ const SliderBar = ({title, mks, def, update}) => {
 }
 
 const SelectMenu = ({title, applyFilters, filters}) => {
+
+    const [checkBox1, setCheckBox1] = useState(false);
+    const [checkBox2, setCheckBox2] = useState(false);
+
+    const toggleCheckBox1 = () => {
+        setCheckBox1(prev=>!prev);
+        const filter = filters;
+        if(title==="Timings"){
+            filter.timings.parttime = !checkBox1;
+        }
+        else{
+            filter.type.workfromhome = !checkBox1;
+        }
+        applyFilters(filter);
+        // console.log(filter);
+    }
+
+    const toggleCheckBox2 = () => {
+        setCheckBox2(prev=>!prev);
+        const filter = filters;
+        if(title==="Timings"){
+            filter.timings.fulltime = !checkBox2;
+        }
+        else{
+            filter.type.inoffice = !checkBox2;
+        }
+        applyFilters(filter);
+        // console.log(filter);
+    }
       
     const [value, setValue] = useState(title==="Timings"? ["Part time", "Full time"]: ["Work from Home", "In Office"]);
 
@@ -177,11 +206,11 @@ const SelectMenu = ({title, applyFilters, filters}) => {
         <div className="flex flex-col gap-2">
             <h3 className="text-base font-bold ml-10 mb-2"> {title} </h3>
             <div className="flex ml-10 flex-row items-center text-xs font-normal">
-                <div className={` cursor-pointer select-none rounded-lg border-[#D0D5DD]`}><Image className={ false && "hidden" } src={check} width={25} height={25} alt="" /></div>
+                <div onClick={toggleCheckBox1} className={` cursor-pointer select-none rounded-lg ${!checkBox1? " border-[2px] w-6 h-6": "  "} border-[#D0D5DD]`}><Image className={ !checkBox1 && "hidden" } src={check} width={25} height={25} alt="" /></div>
                 <label className="ml-2 text-purple-dark w-[140px] h-[30px] flex items-center justify-center text-center rounded-lg bg-purple-light">{value[0]}</label>
             </div>
             <div className="flex ml-10 flex-row items-center text-xs font-normal">
-                <div className={` cursor-pointer select-none rounded-lg border-[#D0D5DD]`}><Image className={ false && "hidden" } src={check} width={25} height={25} alt="" /></div>
+                <div onClick={toggleCheckBox2} className={` cursor-pointer select-none rounded-lg ${!checkBox2? " border-[2px] w-6 h-6": "  "} border-[#D0D5DD]`}><Image className={ !checkBox2 && "hidden" } src={check} width={25} height={25} alt="" /></div>
                 <label className="ml-2 text-purple-dark w-[140px] h-[30px] flex items-center justify-center text-center rounded-lg bg-purple-light">{value[1]}</label>
             </div>
             
