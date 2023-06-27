@@ -74,8 +74,47 @@ export default function Home() {
       // Check skills filter
       const dataSkills = data?.techStacks?.map(stack => stack.toLowerCase());
       const dataSkillsFilter = filters.skills.map(skills => skills.toLowerCase());
-      if (filters?.skills?.length > 0 && !dataSkills.some(skills => dataSkillsFilter.includes(skills))) {
+      if (filters?.skills?.length > 0 && !dataSkills.some(skills => dataSkillsFilter.includes(skills.toLowerCase()))) {
         return false;
+      }
+
+      // Check location filter
+      const dataLocation = data.location.toLowerCase().split(" ");
+      if (filters?.location?.length > 0 && !filters.location.some(filter => dataLocation.includes(filter.toLowerCase()))) {
+        return false;
+      }
+
+      // Check duration filter
+      if (filters.duration[1] === 6) {
+        if (data.duration < filters.duration[0]) {
+          return false;
+        }
+      } else {
+        if (data.duration < filters.duration[0] || data.duration > filters.duration[1]) {
+          return false;
+        }
+      }
+
+      // Check stipend filter
+      if (filters.stipend[1] === 40000) {
+        if (data.stipend[0] < filters.stipend[0] || data.stipend[1] < filters.stipend[0]) {
+          return false;
+        }
+      } else {
+        if (data.stipend[0] < filters.stipend[0] ||  data.stipend[1] > filters.stipend[1]) {
+          return false;
+        }
+      }
+
+      // Check applicants filter
+      if (filters.applicants[1] === 250) {
+        if (data.applicants < filters.applicants[0]) {
+          return false;
+        }
+      } else {
+        if (data.applicants < filters.applicants[0] || data.applicants > filters.applicants[1]) {
+          return false;
+        }
       }
   
       // Check timings filter
@@ -113,46 +152,7 @@ export default function Home() {
       else {
         return false;
       }
-  
-      // Check duration filter
-      if (filters.duration[1] === 6) {
-        if (data.duration < filters.duration[0]) {
-          return false;
-        }
-      } else {
-        if (data.duration < filters.duration[0] || data.duration > filters.duration[1]) {
-          return false;
-        }
-      }
-  
-      // Check location filter
-      const dataLocation = data.location.toLowerCase().split(" ");
-      if (filters?.location?.length > 0 && !filters.location.some(filter => dataLocation.includes(filter.toLowerCase()))) {
-        return false;
-      }
-  
-      // Check stipend filter
-      if (filters.stipend[1] === 40000) {
-        if (data.stipend[0] < filters.stipend[0] || data.stipend[1] < filters.stipend[0]) {
-          return false;
-        }
-      } else {
-        if (data.stipend[0] < filters.stipend[0] ||  data.stipend[1] > filters.stipend[1]) {
-          return false;
-        }
-      }
-  
-      // Check applicants filter
-      if (filters.applicants[1] === 250) {
-        if (data.applicants < filters.applicants[0]) {
-          return false;
-        }
-      } else {
-        if (data.applicants < filters.applicants[0] || data.applicants > filters.applicants[1]) {
-          return false;
-        }
-      }
-
+      
       return true;
     });
   }
