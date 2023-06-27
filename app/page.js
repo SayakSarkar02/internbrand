@@ -466,7 +466,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    console.log("Changes Applied");
   }, [apply]);
   
 
@@ -480,7 +479,6 @@ export default function Home() {
 
   const updateSearchValue = (value) => {
         setSearch(value);
-        console.log(value);
   }
 
   
