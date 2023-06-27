@@ -15,7 +15,8 @@ const Card = ({title, company, logo, techStacks, duration, stipend, applicants, 
     useEffect(()=>{
         const calculateDaysRemaining = () => {
             const currentDate = new Date();
-            const timeDifference = endDate.getTime() - currentDate.getTime();
+            const endDateParsed = new Date(endDate);
+            const timeDifference = endDateParsed?.getTime() - currentDate.getTime();
             const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
             setRemainingDays(daysRemaining-30);
         };
