@@ -126,7 +126,6 @@ export default function Home() {
   
       // Check timings filter
       if(filters.timings.parttime && filters.timings.fulltime){
-        // console.log("state:", filters.type.workfromhome, " ", filters.type.inoffice );
         if(filters.type.workfromhome && filters.type.inoffice){
           return true;
         }
