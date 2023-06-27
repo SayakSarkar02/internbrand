@@ -102,10 +102,10 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
 
   return (
     <div className='absolute bg-white rounded-lg shadow-lg shadow-black/20 w-[570px] h-[544px] top-44 right-0 z-[999] pr-8'>
-        <div className="flex justify-between items-center m-3">
+        <div className="flex justify-between items-center m-3 mr-0">
             <div></div>
             <h2 className='font-bold text-purple-dark text-center text-lg select-none'>Filters</h2>
-            <button onClick={handleToggleFilter} className='cursor-pointer hover:brightness-150'> <Image src={close} alt="" /> </button>
+            <button onClick={handleToggleFilter} className='cursor-pointer relative left-6 top-0 hover:brightness-150'> <Image src={close} alt="" /> </button>
         </div>
         <div className="grid grid-cols-2 gap-4">
             <SearchFilter title="Category" applyFilters={applyFilters} filters={filters}/>
