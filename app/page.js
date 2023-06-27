@@ -10,6 +10,7 @@ export default function Home() {
   const [type, setType] = useState("popular");
   const [apply, setApply] = useState(true);
   const [selected, setSelected] = useState(-1);
+  const [search, setSearch] = useState();
 
   const reApply = () => {
     setApply(prev=>!prev);
@@ -367,14 +368,19 @@ export default function Home() {
 
   function filterDataList(data, fil) {
     return dataList.filter((data) => {
+
+      //Search filter
+      if(search?.length>0){
+        return data?.title.toLowerCase().includes(search?.toLowerCase());
+      }
       // Check category filter
-      const dataCategories = data.category.toLowerCase().split(" ");
+      const dataCategories = data?.category?.toLowerCase().split(" ");
       if (filters?.category?.length > 0 && !filters.category.some(filter => dataCategories.includes(filter.toLowerCase()))) {
         return false;
       }
   
       // Check skills filter
-      const dataSkills = data.techStacks.map(stack => stack.toLowerCase());
+      const dataSkills = data?.techStacks?.map(stack => stack.toLowerCase());
       const dataSkillsFilter = filters.skills.map(skills => skills.toLowerCase());
       if (filters?.skills?.length > 0 && !dataSkills.some(skills => dataSkillsFilter.includes(skills))) {
         return false;
@@ -454,8 +460,7 @@ export default function Home() {
           return false;
         }
       }
-  
-      // If all filters pass, include the data in the filtered array
+
       return true;
     });
   }
@@ -473,16 +478,17 @@ export default function Home() {
     setFilters(filters);
   }
 
+  const updateSearchValue = (value) => {
+        setSearch(value);
+        console.log(value);
+  }
+
   
 
   return (
     <main className="">
       <Navbar/>
-      {/* <button onClick={()=>{
-        reApply();
-        console.log(filterDataList(dataList, filters));
-        }}>Print</button> */}
-      <Subbar handleSetType={handleSetType} reRender={reApply} type={type} filters={filters} applyFilters={applyFilters}/>
+      <Subbar handleSetType={handleSetType} search={search} updateSearchValue={updateSearchValue} reRender={reApply} type={type} filters={filters} applyFilters={applyFilters}/>
       <div className="my-8 flex flex-row ">
         <div className="w-1/3 flex flex-col gap-4">
           {
@@ -491,6 +497,9 @@ export default function Home() {
                 <Card title={data?.title} isSelected={index===selected.id-1} company={data?.company} logo={data?.logo} techStacks={data?.techStacks} duration={data?.duration} stipend={data?.stipend} applicants={data?.applicants} endDate={data?.endDate}/>
               </div>
             ))
+          }
+          {
+            filterDataList(dataList, filters).length===0 && <h3 className="text-center font-semibold text-xl text-purple-mid mt-10">No results found</h3>
           }
         </div>
         <div className="w-2/3">

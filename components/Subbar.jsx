@@ -1,11 +1,11 @@
 "use client"
 import Image from "next/image"
-import search from "@assets/icons/search.svg"
+import searchicon from "@assets/icons/search.svg"
 import filter from "@assets/icons/filter.svg"
 import { FilterMenu } from "@components/FilterMenu"
 import { useState } from "react"
 
-const Subbar = ({type, handleSetType, filters, applyFilters, reRender}) => {
+const Subbar = ({type, handleSetType, filters, applyFilters, reRender, search, updateSearchValue}) => {
 
     const selected = " bg-purple-dark text-white font-bold"
 
@@ -29,8 +29,8 @@ const Subbar = ({type, handleSetType, filters, applyFilters, reRender}) => {
         <div className="w-2/3">
             <div className="flex flex-row justify-center items-center gap-5">
             <div className="flex w-[90%] flex-row rounded-xl border-[1px] border-black/10">
-                <input type="text" className="grow rounded-l-xl outline-2 -outline-offset-1 outline-purple-mid text-purple-dark px-5" />
-                <button className="bg-purple-dark w-[70px] h-[50px] flex items-center justify-center rounded-r-xl"> <Image src={search} alt="search" /> </button>
+                <input onChange={(e)=>{updateSearchValue(e.currentTarget.value)}} type="text" className="grow rounded-l-xl outline-2 -outline-offset-1 outline-purple-mid text-purple-dark px-5" />
+                <button onClick={()=>{reRender()}} className="bg-purple-dark w-[70px] h-[50px] flex items-center justify-center rounded-r-xl"> <Image src={searchicon} alt="search" /> </button>
             </div>
             <button onClick={handleToggleFilter}>
                 <Image src={filter} alt="filter" className="pointer-cursor transform hover:scale-125 transition-all duration-200 ease-in-out"/>
