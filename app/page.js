@@ -58,25 +58,28 @@ export default function Home() {
     fetchData()
   },[])
 
-  function filterDataList(data, fil) {
+  function filterDataList() {
     return dataList.filter((data) => {
 
       //Search filter
       if(search?.length>0){
         return data?.title.toLowerCase().includes(search?.toLowerCase());
       }
+
+
       // Check category filter
       const dataCategories = data?.category?.toLowerCase().split(" ");
       if (filters?.category?.length > 0 && !filters.category.some(filter => dataCategories.includes(filter.toLowerCase()))) {
         return false;
       }
-  
+
       // Check skills filter
       const dataSkills = data?.techStacks?.map(stack => stack.toLowerCase());
       const dataSkillsFilter = filters.skills.map(skills => skills.toLowerCase());
       if (filters?.skills?.length > 0 && !dataSkills.some(skills => dataSkillsFilter.includes(skills.toLowerCase()))) {
         return false;
       }
+
 
       // Check location filter
       const dataLocation = data.location.toLowerCase().split(" ");
@@ -95,6 +98,7 @@ export default function Home() {
         }
       }
 
+
       // Check stipend filter
       if (filters.stipend[1] === 40000) {
         if (data.stipend[0] < filters.stipend[0] || data.stipend[1] < filters.stipend[0]) {
@@ -106,6 +110,7 @@ export default function Home() {
         }
       }
 
+
       // Check applicants filter
       if (filters.applicants[1] === 250) {
         if (data.applicants < filters.applicants[0]) {
@@ -116,13 +121,49 @@ export default function Home() {
           return false;
         }
       }
+
+
   
       // Check timings filter
       if(filters.timings.parttime && filters.timings.fulltime){
+        // console.log("state:", filters.type.workfromhome, " ", filters.type.inoffice );
+        if(filters.type.workfromhome && filters.type.inoffice){
+          return true;
+        }
+        if (filters.type.workfromhome && !filters.type.inoffice){
+          if(data.type.inoffice){
+            return false;
+          }
+        }
+        if (!filters.type.workfromhome && filters.type.inoffice){
+          if(data.type.workfromhome){
+            return false;
+          }
+        }
+        if (!filters.type.workfromhome && !filters.type.inoffice){
+          return false;
+        }
+
         return true;
       }
       else if (filters.timings.parttime && !filters.timings.fulltime){
         if(data.timings.fulltime){
+          return false;
+        }
+        if(filters.type.workfromhome && filters.type.inoffice){
+          return true;
+        }
+        if (filters.type.workfromhome && !filters.type.inoffice){
+          if(data.type.inoffice){
+            return false;
+          }
+        }
+        if (!filters.type.workfromhome && filters.type.inoffice){
+          if(data.type.workfromhome){
+            return false;
+          }
+        }
+        if (!filters.type.workfromhome && !filters.type.inoffice){
           return false;
         }
       }
@@ -130,29 +171,34 @@ export default function Home() {
         if(data.timings.parttime){
           return false;
         }
+        if(filters.type.workfromhome && filters.type.inoffice){
+          return true;
+        }
+        if (filters.type.workfromhome && !filters.type.inoffice){
+          if(data.type.inoffice){
+            return false;
+          }
+        }
+        if (!filters.type.workfromhome && filters.type.inoffice){
+          if(data.type.workfromhome){
+            return false;
+          }
+        }
+        if (!filters.type.workfromhome && !filters.type.inoffice){
+          return false;
+        }
       }
       else {
         return false;
       }
-  
+
+
+
       // Check type filter
-      if(filters.type.workfromhome && filters.type.inoffice){
-        return true;
-      }
-      else if (filters.type.workfromhome && !filters.type.inoffice){
-        if(data.type.inoffice){
-          return false;
-        }
-      }
-      else if (!filters.type.workfromhome && filters.type.inoffice){
-        if(data.type.workfromhome){
-          return false;
-        }
-      }
-      else {
-        return false;
-      }
       
+
+      
+
       return true;
     });
   }
@@ -183,7 +229,7 @@ export default function Home() {
       <div className="my-8 flex flex-row ">
         <div className="w-1/3 flex flex-col gap-4">
           {
-            filterDataList(dataList, filters).map((data, index)=>(
+            filterDataList().map((data, index)=>(
               <div key={data?.id} onClick={()=>{setSelected(dataList[data?.id-1])}} >
                 <Card title={data?.title} isSelected={index===selected.id-1} company={data?.company} logo={data?.logo} techStacks={data?.techStacks} duration={data?.duration} stipend={data?.stipend} applicants={data?.applicants} endDate={data?.endDate}/>
               </div>
