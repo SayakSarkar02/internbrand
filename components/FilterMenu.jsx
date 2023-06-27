@@ -43,6 +43,19 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
         return convertedArr;
     };
 
+    const reverseConvertStipend = (arr) => {
+        const mapping = {
+          0: 1,
+          1000: 2,
+          5000: 3,
+          10000: 4,
+          20000: 5,
+          40000: 6,
+        };
+        const convertedArr = arr.map((value) => mapping[value]);
+        return convertedArr;
+    };
+
     const convertApplicants = (arr) => {
         const mapping = {
           1: 0,
@@ -76,8 +89,12 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
         filter.location = [];
         filter.type = [];
         filter.duration = [1,6];
-        filter.stipend = [0,40];
+        filter.stipend = [0,40000];
         filter.applicants = [0,250];
+        filter.timings.parttime = true;
+        filter.timings.fulltime = true;
+        filter.type.workfromhome = true;
+        filter.type.inoffice = true;
         applyFilters(filter);
         reRender();
         handleToggleFilter();
@@ -97,7 +114,7 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
             <SelectMenu title="Type" applyFilters={applyFilters} filters={filters}/>
             <SliderBar title="Duration (Months)" update={updateDuration} mks={[{value: 1,},{value: 2,},{value: 3,},{value: 4,},{value: 5,},{value: 6,}]} def={filters?.duration}/>
             <SearchFilter title="Location" applyFilters={applyFilters} filters={filters}/>
-            <SliderBar title="Stipend" update={updateStipend} mks={[{value: 0,},{value: 1,},{value: 5,},{value: 10,},{value: 20,},{value: 40,}]} def={[1,3]}/>
+            <SliderBar title="Stipend" update={updateStipend} mks={[{value: 0,},{value: 1,},{value: 5,},{value: 10,},{value: 20,},{value: 40,}]} def={reverseConvertStipend(filters?.stipend)}/>
             <SliderBar title="Applicants" update={updateApplication} mks={[{value: 0,},{value: 10,},{value: 25,},{value: 50,},{value: 100,},{value: 250,}]} def={reverseConvertApplicants(filters?.applicants)}/>
         </div>
         <div className="px-10 flex flex-row items-center justify-between absolute py-2 rounded-t-[10px] shadow-custom bottom-0 left-0 w-full">
@@ -206,8 +223,8 @@ const SliderBar = ({title, mks, def, update}) => {
 
 const SelectMenu = ({title, applyFilters, filters}) => {
 
-    const [checkBox1, setCheckBox1] = useState(false);
-    const [checkBox2, setCheckBox2] = useState(false);
+    const [checkBox1, setCheckBox1] = useState(title==="Timings"? filters?.timings?.parttime: filters?.type?.workfromhome);
+    const [checkBox2, setCheckBox2] = useState(title==="Timings"? filters?.timings?.fulltime: filters?.type?.inoffice);
 
     const toggleCheckBox1 = () => {
         setCheckBox1(prev=>!prev);

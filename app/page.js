@@ -20,16 +20,16 @@ export default function Home() {
       category: [],
       skills: [],
       timings: {
-        parttime: false,
-        fulltime: false,
+        parttime: true,
+        fulltime: true,
       },
       type: {
-        workfromhome: false,
-        inoffice: false
+        workfromhome: true,
+        inoffice: true
       },
       duration: [1,6],
       location: [],
-      stipend: [0,5000],
+      stipend: [0,40000],
       applicants: [0, 250]
     }
   );
@@ -44,6 +44,14 @@ export default function Home() {
       duration: 3, //in months
       experience: "Intermediate",
       stipend: [20000, 30000],
+      timings: {
+        parttime: false,
+        fulltime: true,
+      },
+      type: {
+        workfromhome: true,
+        inoffice: false
+      },
       location: "Noida",
       posted: new Date(2023, 6, 20),
       endDate: new Date(2023, 6, 29),
@@ -70,7 +78,15 @@ export default function Home() {
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687728682/image_4_iios8f.png",
       duration: 1, //in months
       experience: "Intermediate",
-      stipend: [],
+      stipend: [0,0],
+      timings: {
+        parttime: false,
+        fulltime: true,
+      },
+      type: {
+        workfromhome: false,
+        inoffice: true
+      },
       location: "Delhi",
       posted: new Date(2023, 6, 20),
       endDate: new Date(2023, 7, 1),
@@ -97,6 +113,14 @@ export default function Home() {
       duration: 6,
       experience: "Entry Level",
       stipend: [15000, 25000],
+      timings: {
+        parttime: false,
+        fulltime: true,
+      },
+      type: {
+        workfromhome: false,
+        inoffice: true
+      },
       location: "Bangalore",
       posted: new Date(2023, 5, 12),
       endDate: new Date(2023, 6, 30),
@@ -126,6 +150,14 @@ export default function Home() {
       duration: 12,
       experience: "Senior",
       stipend: [40000, 60000],
+      timings: {
+        parttime: true,
+        fulltime: false,
+      },
+      type: {
+        workfromhome: true,
+        inoffice: false
+      },
       location: "Mumbai",
       posted: new Date(2023, 5, 25),
       endDate: new Date(2023, 6, 31),
@@ -155,6 +187,14 @@ export default function Home() {
       duration: 6,
       experience: "Intermediate",
       stipend: [35000, 45000],
+      timings: {
+        parttime: true,
+        fulltime: false,
+      },
+      type: {
+        workfromhome: true,
+        inoffice: false
+      },
       location: "Delhi",
       posted: new Date(2023, 6, 1),
       endDate: new Date(2023, 6, 30),
@@ -183,7 +223,15 @@ export default function Home() {
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687722945/logo_5_creativesolutions.png",
       duration: 6,
       experience: "Intermediate",
-      stipend: [25000, 35000],
+      stipend: [5000, 6000],
+      timings: {
+        parttime: true,
+        fulltime: false,
+      },
+      type: {
+        workfromhome: true,
+        inoffice: false
+      },
       location: "San Francisco",
       posted: new Date(2023, 6, 5),
       endDate: new Date(2023, 6, 30),
@@ -213,6 +261,14 @@ export default function Home() {
       duration: 9,
       experience: "Senior",
       stipend: [50000, 70000],
+      timings: {
+        parttime: false,
+        fulltime: true,
+      },
+      type: {
+        workfromhome: true,
+        inoffice: false
+      },
       location: "Kolkata",
       posted: new Date(2023, 6, 10),
       endDate: new Date(2023, 6, 31),
@@ -241,7 +297,15 @@ export default function Home() {
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687722945/logo_7_globaltech.png",
       duration: 12,
       experience: "Senior",
-      stipend: [60000, 80000],
+      stipend: [10000, 20000],
+      timings: {
+        parttime: true,
+        fulltime: false,
+      },
+      type: {
+        workfromhome: true,
+        inoffice: false
+      },
       location: "Kolkata",
       posted: new Date(2023, 6, 15),
       endDate: new Date(2023, 6, 31),
@@ -270,7 +334,15 @@ export default function Home() {
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687722945/logo_8_datatech.png",
       duration: 9,
       experience: "Intermediate",
-      stipend: [35000, 45000],
+      stipend: [25000, 30000],
+      timings: {
+        parttime: false,
+        fulltime: true,
+      },
+      type: {
+        workfromhome: true,
+        inoffice: false
+      },
       location: "Mumbai",
       posted: new Date(2023, 6, 18),
       endDate: new Date(2023, 6, 31),
@@ -309,20 +381,40 @@ export default function Home() {
       }
   
       // Check timings filter
-      // if (filters.timings.parttime && !data.duration <= 4) {
-      //   return false;
-      // }
-      // if (filters.timings.fulltime && !(data.duration > 4)) {
-      //   return false;
-      // }
+      if(filters.timings.parttime && filters.timings.fulltime){
+        return true;
+      }
+      else if (filters.timings.parttime && !filters.timings.fulltime){
+        if(data.timings.fulltime){
+          return false;
+        }
+      }
+      else if (!filters.timings.parttime && filters.timings.fulltime){
+        if(data.timings.parttime){
+          return false;
+        }
+      }
+      else {
+        return false;
+      }
   
       // Check type filter
-      // if (filters.type.workfromhome && !data.location.includes("Remote")) {
-      //   return false;
-      // }
-      // if (filters.type.inoffice && data.location.includes("Remote")) {
-      //   return false;
-      // }
+      if(filters.type.workfromhome && filters.type.inoffice){
+        return true;
+      }
+      else if (filters.type.workfromhome && !filters.type.inoffice){
+        if(data.type.inoffice){
+          return false;
+        }
+      }
+      else if (!filters.type.workfromhome && filters.type.inoffice){
+        if(data.type.workfromhome){
+          return false;
+        }
+      }
+      else {
+        return false;
+      }
   
       // Check duration filter
       if (filters.duration[1] === 6) {
@@ -342,12 +434,15 @@ export default function Home() {
       }
   
       // Check stipend filter
-      // if (
-      //   data.stipend[0] < filters.stipend[0] ||
-      //   data.stipend[1] > filters.stipend[1]
-      // ) {
-      //   return false;
-      // }
+      if (filters.stipend[1] === 40000) {
+        if (data.stipend[0] < filters.stipend[0] || data.stipend[1] < filters.stipend[0]) {
+          return false;
+        }
+      } else {
+        if (data.stipend[0] < filters.stipend[0] ||  data.stipend[1] > filters.stipend[1]) {
+          return false;
+        }
+      }
   
       // Check applicants filter
       if (filters.applicants[1] === 250) {
@@ -383,10 +478,10 @@ export default function Home() {
   return (
     <main className="">
       <Navbar/>
-      <button onClick={()=>{
+      {/* <button onClick={()=>{
         reApply();
         console.log(filterDataList(dataList, filters));
-        }}>Print</button>
+        }}>Print</button> */}
       <Subbar handleSetType={handleSetType} reRender={reApply} type={type} filters={filters} applyFilters={applyFilters}/>
       <div className="my-8 flex flex-row ">
         <div className="w-1/3 flex flex-col gap-4">
