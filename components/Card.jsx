@@ -26,7 +26,7 @@ const Card = ({title, company, logo, techStacks, duration, stipend, applicants, 
 
   return (
     <div>
-        <div className={`bg-white shadow-lg px-4 py-3 cursor-pointer shadow-black/10 rounded-xl w-[90%] font-semibold text-purple-mid mx-auto flex flex-col justify-between gap-2 ${isSelected && " shadow-purple-mid"}`}>
+        <div className={`bg-white px-4 py-3 cursor-pointer  rounded-xl w-[90%] font-semibold text-purple-mid mx-auto flex flex-col justify-between gap-2 ${isSelected ? " shadow-highlight ": " shadow-lg  shadow-black/10 "}`}>
             <div className="flex flex-row justify-between items-center w-full">
                 <div className="flex flex-col gap-1">
                     <h3 className='text-black text-base font-bold'>{title}</h3>

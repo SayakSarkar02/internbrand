@@ -23,6 +23,7 @@ module.exports = {
       },
       boxShadow: {
         custom: '0px -3px 10px 0px rgba(0, 0, 0, 0.25)',
+        highlight: '1px 1px 10px 0px rgba(105, 56, 239, 1)',
       },
     },
   },
