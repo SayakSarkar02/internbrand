@@ -18,8 +18,10 @@ const Details = ({title, company, logo, link, category, aboutUs, requirements, r
     useEffect(()=>{
         const calculateDaysRemaining = () => {
             const currentDate = new Date();
-            const timeDifference = endDate.getTime() - currentDate.getTime();
-            const timeDifference2 = currentDate.getTime() - posted.getTime();
+            const endDateParsed = new Date(endDate);
+            const timeDifference = endDateParsed?.getTime() - currentDate.getTime();
+            const postedParsed = new Date(posted);
+            const timeDifference2 = currentDate.getTime() - postedParsed.getTime();
             const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
             const daysSincePosted = Math.floor(timeDifference2 / (1000 * 60 * 60 * 24));
             setRemainingDays(daysRemaining-30);
