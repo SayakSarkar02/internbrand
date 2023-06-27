@@ -29,7 +29,7 @@ const Details = ({title, company, logo, link, category, aboutUs, requirements, r
     }, [])
 
     return (
-    <div className='bg-white rounded-xl w-[95%] ml-6 min-h-screen p-10 relative overflow-clip'>
+        <div className='bg-white rounded-xl w-[95%] ml-6 min-h-screen p-10 relative overflow-clip'>
         
         {/* Category */}
         <div className="bg-purple-light text-purple-dark font-bold text-xl absolute top-0 right-0 py-4 px-8 pl-12 rounded-bl-full">{category}</div>
@@ -150,8 +150,7 @@ const Details = ({title, company, logo, link, category, aboutUs, requirements, r
             <a href="#" target="_blank" rel="noopener noreferrer" >Apply Now</a>
         </div>
         </div>
-    </div>
-  )
+        </div>)
 }
 
 export default Details

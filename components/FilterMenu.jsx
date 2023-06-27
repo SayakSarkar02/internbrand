@@ -241,7 +241,7 @@ const SelectMenu = ({title, applyFilters, filters}) => {
 
 const SearchFilter = ({title, applyFilters, filters}) => {
 
-    const [words, setWords] = useState([title==="Category"?filters.category:title==="Skills"?filters.skills:filters.location]);
+    const [words, setWords] = useState(title==="Category"?filters.category:title==="Skills"?filters.skills:filters.location);
 
     const addWord = (e) => {
         const word = e.target.value.trim();

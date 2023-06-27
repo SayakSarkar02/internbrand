@@ -9,7 +9,7 @@ const Subbar = ({type, handleSetType, filters, applyFilters, reRender}) => {
 
     const selected = " bg-purple-dark text-white font-bold"
 
-    const [isFilterOpen, setIsFilterOpen] = useState(true);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     const handleToggleFilter = () => {
         setIsFilterOpen((prev)=>!prev)
@@ -33,7 +33,7 @@ const Subbar = ({type, handleSetType, filters, applyFilters, reRender}) => {
                 <button className="bg-purple-dark w-[70px] h-[50px] flex items-center justify-center rounded-r-xl"> <Image src={search} alt="search" /> </button>
             </div>
             <button onClick={handleToggleFilter}>
-                <Image src={filter} alt="filter" />
+                <Image src={filter} alt="filter" className="pointer-cursor transform hover:scale-125 transition-all duration-200 ease-in-out"/>
             </button>
                 {isFilterOpen && <FilterMenu reRender={reRender} filters={filters} applyFilters={applyFilters} handleToggleFilter={handleToggleFilter}/>}
             </div>

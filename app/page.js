@@ -90,7 +90,7 @@ export default function Home() {
     },
     {
       id: 3,
-      title: "Motion Graphics Designer",
+      title: "Graphics Designer",
       company: "Xapo Visuals",
       category: "Design",
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687728682/image_4_iios8f.png",
@@ -116,7 +116,7 @@ export default function Home() {
     },
     {
       id: 4,
-      title: "Motion Graphics Designer",
+      title: "Animation Designer",
       company: "Xapo Visuals",
       category: "Design",
       logo: "https://res.cloudinary.com/dj3p6sirz/image/upload/v1687728682/image_4_iios8f.png",
@@ -171,19 +171,17 @@ export default function Home() {
   function filterDataList(data, fil) {
     return dataList.filter((data) => {
       // Check category filter
-      if (filters.category.length > 0 && !filters.category.includes(data.category)) {
+      const dataCategories = data.category.toLowerCase().split(" ");
+      if (filters?.category?.length > 0 && !filters.category.some(filter => dataCategories.includes(filter.toLowerCase()))) {
         return false;
       }
   
       // Check skills filter
-      // if (filters.skills.length > 0) {
-      //   const hasAllSkills = filters.skills.every((skill) =>
-      //     data.techStacks.includes(skill)
-      //   );
-      //   if (!hasAllSkills) {
-      //     return false;
-      //   }
-      // }
+      const dataSkills = data.techStacks.map(stack => stack.toLowerCase());
+      const dataSkillsFilter = filters.skills.map(skills => skills.toLowerCase());
+      if (filters?.skills?.length > 0 && !dataSkills.some(skills => dataSkillsFilter.includes(skills))) {
+        return false;
+      }
   
       // Check timings filter
       // if (filters.timings.parttime && !data.duration <= 4) {
@@ -256,16 +254,16 @@ export default function Home() {
   return (
     <main className="">
       <Navbar/>
-      {/* <button onClick={()=>{
+      <button onClick={()=>{
         reApply();
         console.log(filterDataList(dataList, filters));
-        }}>Print</button> */}
+        }}>Print</button>
       <Subbar handleSetType={handleSetType} reRender={reApply} type={type} filters={filters} applyFilters={applyFilters}/>
       <div className="my-8 flex flex-row ">
         <div className="w-1/3 flex flex-col gap-4">
           {
             filterDataList(dataList, filters).map((data, index)=>(
-              <div key={data?.id} onClick={()=>{setSelected(dataList[index])}} >
+              <div key={data?.id} onClick={()=>{setSelected(dataList[data?.id-1])}} >
                 <Card title={data?.title} isSelected={index===selected.id-1} company={data?.company} logo={data?.logo} techStacks={data?.techStacks} duration={data?.duration} stipend={data?.stipend} applicants={data?.applicants} endDate={data?.endDate}/>
               </div>
             ))
