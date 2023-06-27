@@ -67,6 +67,7 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
         filter.applicants = [0,250];
         applyFilters(filter);
         reRender();
+        handleToggleFilter();
     }
 
   return (
@@ -288,33 +289,36 @@ const SearchFilter = ({title, applyFilters, filters}) => {
       };
 
       const removeWord = (index) => {
-        setWords((prevWords) => {
-          const updatedWords = [...prevWords];
-          updatedWords.splice(index, 1);
-          return updatedWords;
-        });
         const filter = filters;
+        
             if(title==="Category"){
-                filter.category = [...words].splice(index, 1);
+                filter.category = [...words].filter(word => word !== index);
                 applyFilters(filter);
             }
             else if(title==="Skills"){
-                filter.skills = [...words].splice(index, 1);
+                filter.skills = [...words].filter(word => word !== index);
                 applyFilters(filter);
             }
             else {
-                filter.location = [...words].splice(index, 1);
+                filter.location = [...words].filter(word => word !== index);
                 applyFilters(filter);
             }
+        
+        setWords((prevWords) => {
+          const updatedWords = [...prevWords];
+          updatedWords.splice([...words].indexOf(index), 1);
+          return updatedWords;
+        });
+        
       };
       
     return (
         <div className="flex flex-col">
             <h3 className="text-base font-bold ml-10 mb-2"> {title} </h3>
             <div className="w-[240px] h-[40px] border-[1px] border-black/10 noscr rounded-[10px] ml-8 flex flex-row gap-1 items-center overflow-scroll px-1">
-                {words.map((word, index)=>(
-                <div className=" flex w-full flex-row items-center pr-2 py-0.5 bg-purple-light rounded-lg text-purple-dark">
-                    <svg className="cursor-pointer" onClick={()=>{removeWord(index)}} xmlns="http://www.w3.org/2000/svg" width="22" height="20" fill="none" viewBox="0 0 22 20"><g><path fill="#6938EF" d="M12.27 10l3.739-3.575a.82.82 0 00.255-.592.82.82 0 00-.255-.591.893.893 0 00-.618-.245.893.893 0 00-.617.245l-3.73 3.583-3.731-3.583a.893.893 0 00-.617-.245.893.893 0 00-.618.245.82.82 0 00-.255.591.82.82 0 00.255.592L9.818 10l-3.74 3.575a.803.803 0 000 1.183.873.873 0 00.618.247.903.903 0 00.617-.247l3.73-3.583 3.73 3.583a.873.873 0 00.618.247.902.902 0 00.618-.247.83.83 0 00.257-.591.802.802 0 00-.257-.592L12.269 10z"></path></g></svg>
+                {words.map((word)=>(
+                <div key={word} className=" flex w-full flex-row items-center pr-2 py-0.5 bg-purple-light rounded-lg text-purple-dark">
+                    <svg className="cursor-pointer" onClick={()=>{removeWord(word)}} xmlns="http://www.w3.org/2000/svg" width="22" height="20" fill="none" viewBox="0 0 22 20"><g><path fill="#6938EF" d="M12.27 10l3.739-3.575a.82.82 0 00.255-.592.82.82 0 00-.255-.591.893.893 0 00-.618-.245.893.893 0 00-.617.245l-3.73 3.583-3.731-3.583a.893.893 0 00-.617-.245.893.893 0 00-.618.245.82.82 0 00-.255.591.82.82 0 00.255.592L9.818 10l-3.74 3.575a.803.803 0 000 1.183.873.873 0 00.618.247.903.903 0 00.617-.247l3.73-3.583 3.73 3.583a.873.873 0 00.618.247.902.902 0 00.618-.247.83.83 0 00.257-.591.802.802 0 00-.257-.592L12.269 10z"></path></g></svg>
                     <h3>{word}</h3>
                 </div>
                 ))}
