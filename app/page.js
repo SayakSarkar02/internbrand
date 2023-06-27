@@ -27,9 +27,9 @@ export default function Home() {
         workfromhome: false,
         inoffice: false
       },
-      duration: [3,5],
+      duration: [1,6],
       location: [],
-      stipend: [0,5],
+      stipend: [0,5000],
       applicants: [0, 250]
     }
   );
@@ -71,7 +71,7 @@ export default function Home() {
       duration: 1, //in months
       experience: "Intermediate",
       stipend: [],
-      location: "Noida",
+      location: "Delhi",
       posted: new Date(2023, 6, 20),
       endDate: new Date(2023, 7, 1),
       openPositions: 10,
@@ -155,7 +155,7 @@ export default function Home() {
       duration: 6,
       experience: "Intermediate",
       stipend: [35000, 45000],
-      location: "New Delhi",
+      location: "Delhi",
       posted: new Date(2023, 6, 1),
       endDate: new Date(2023, 6, 30),
       openPositions: 2,
@@ -213,7 +213,7 @@ export default function Home() {
       duration: 9,
       experience: "Senior",
       stipend: [50000, 70000],
-      location: "Seattle",
+      location: "Kolkata",
       posted: new Date(2023, 6, 10),
       endDate: new Date(2023, 6, 31),
       openPositions: 2,
@@ -242,7 +242,7 @@ export default function Home() {
       duration: 12,
       experience: "Senior",
       stipend: [60000, 80000],
-      location: "London",
+      location: "Kolkata",
       posted: new Date(2023, 6, 15),
       endDate: new Date(2023, 6, 31),
       openPositions: 1,
@@ -271,7 +271,7 @@ export default function Home() {
       duration: 9,
       experience: "Intermediate",
       stipend: [35000, 45000],
-      location: "Toronto",
+      location: "Mumbai",
       posted: new Date(2023, 6, 18),
       endDate: new Date(2023, 6, 31),
       openPositions: 3,
@@ -325,20 +325,21 @@ export default function Home() {
       // }
   
       // Check duration filter
-      // if (
-      //   data.duration < filters.duration[0] ||
-      //   data.duration > filters.duration[1]
-      // ) {
-      //   return false;
-      // }
+      if (filters.duration[1] === 6) {
+        if (data.duration < filters.duration[0]) {
+          return false;
+        }
+      } else {
+        if (data.duration < filters.duration[0] || data.duration > filters.duration[1]) {
+          return false;
+        }
+      }
   
       // Check location filter
-      // if (
-      //   filters.location.length > 0 &&
-      //   !filters.location.includes(data.location)
-      // ) {
-      //   return false;
-      // }
+      const dataLocation = data.location.toLowerCase().split(" ");
+      if (filters?.location?.length > 0 && !filters.location.some(filter => dataLocation.includes(filter.toLowerCase()))) {
+        return false;
+      }
   
       // Check stipend filter
       // if (
@@ -349,12 +350,15 @@ export default function Home() {
       // }
   
       // Check applicants filter
-      // if (
-      //   data.applicants < filters.applicants[0] ||
-      //   data.applicants > filters.applicants[1]
-      // ) {
-      //   return false;
-      // }
+      if (filters.applicants[1] === 250) {
+        if (data.applicants < filters.applicants[0]) {
+          return false;
+        }
+      } else {
+        if (data.applicants < filters.applicants[0] || data.applicants > filters.applicants[1]) {
+          return false;
+        }
+      }
   
       // If all filters pass, include the data in the filtered array
       return true;

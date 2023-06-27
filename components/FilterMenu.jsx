@@ -33,11 +33,11 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
     const convertStipend = (arr) => {
         const mapping = {
           1: 0,
-          2: 1,
-          3: 5,
-          4: 10,
-          5: 20,
-          6: 40,
+          2: 1000,
+          3: 5000,
+          4: 10000,
+          5: 20000,
+          6: 40000,
         };
         const convertedArr = arr.map((value) => mapping[value]);
         return convertedArr;
@@ -55,6 +55,19 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
         const convertedArr = arr.map((value) => mapping[value]);
         return convertedArr;
     };
+
+    const reverseConvertApplicants = (arr) => {
+        const reverseMapping = {
+          0: 1,
+          10: 2,
+          25: 3,
+          50: 4,
+          100: 5,
+          250: 6,
+        };
+        const originalArr = arr.map((value) => reverseMapping[value]);
+        return originalArr;
+      };
 
     const clearAll = () => {
         const filter = filters;
@@ -85,7 +98,7 @@ export const FilterMenu = ({filters, applyFilters, handleToggleFilter, reRender}
             <SliderBar title="Duration (Months)" update={updateDuration} mks={[{value: 1,},{value: 2,},{value: 3,},{value: 4,},{value: 5,},{value: 6,}]} def={filters?.duration}/>
             <SearchFilter title="Location" applyFilters={applyFilters} filters={filters}/>
             <SliderBar title="Stipend" update={updateStipend} mks={[{value: 0,},{value: 1,},{value: 5,},{value: 10,},{value: 20,},{value: 40,}]} def={[1,3]}/>
-            <SliderBar title="Applicants" update={updateApplication} mks={[{value: 0,},{value: 10,},{value: 25,},{value: 50,},{value: 100,},{value: 250,}]} def={[1,3]}/>
+            <SliderBar title="Applicants" update={updateApplication} mks={[{value: 0,},{value: 10,},{value: 25,},{value: 50,},{value: 100,},{value: 250,}]} def={reverseConvertApplicants(filters?.applicants)}/>
         </div>
         <div className="px-10 flex flex-row items-center justify-between absolute py-2 rounded-t-[10px] shadow-custom bottom-0 left-0 w-full">
             <h3 onClick={()=>{clearAll()}} className="cursor-pointer font-bold text-sm text-purple-dark">Clear All</h3>
